@@ -17,8 +17,13 @@ import (
 	"path/filepath"
 	"runtime"
 
+<<<<<<< HEAD:internal/pkg/build/sources/conveyorPacker_arch.go
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+>>>>>>> origin/master:internal/pkg/build/sources/conveyorPacker_arch.go
 )
 
 const (

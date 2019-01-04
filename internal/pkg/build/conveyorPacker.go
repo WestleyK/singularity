@@ -6,7 +6,11 @@
 package build
 
 import (
+<<<<<<< HEAD:internal/pkg/build/conveyorPacker.go
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+>>>>>>> origin/master:internal/pkg/build/conveyorPacker.go
 )
 
 // Conveyor is responsible for downloading from remote sources (library, shub, docker...)

@@ -150,13 +150,21 @@ $(BUILDDIR)/.clean-starter: $(starter_SOURCE)
 # starter
 $(starter): $(BUILDDIR)/.clean-starter $(go_OBJ) $(starter_OBJ) $(libruntime)
 	@echo " GO" $@
+<<<<<<< HEAD
 	$(V)go build $(GO_BUILDMODE) -tags "$(GO_TAGS)" $(GO_LDFLAGS) -o $@ \
+=======
+	$(V)go build $(GO_BUILDMODE) $(GO_TAGS) $(GO_LDFLAGS) -o $@ \
+>>>>>>> origin/master
 		$(SOURCEDIR)/cmd/starter/main.go
 
 # singularity
 $(singularity): $(go_OBJ) $(libruntime) $(singularity_OBJ)
 	@echo " GO" $@
+<<<<<<< HEAD
 	$(V)go build $(GO_BUILDMODE) -tags "$(GO_TAGS)" $(GO_LDFLAGS) -o $(BUILDDIR)/singularity $(SOURCEDIR)/cmd/singularity/cli.go
+=======
+	$(V)go build $(GO_BUILDMODE) $(GO_TAGS) $(GO_LDFLAGS) -o $(BUILDDIR)/singularity $(SOURCEDIR)/cmd/singularity/cli.go
+>>>>>>> origin/master
 $(singularity_INSTALL): $(singularity)
 	@echo " INSTALL" $@
 	$(V)install -d $(@D)
@@ -202,8 +210,12 @@ $(dist_bin_SCRIPTS_INSTALL): $(dist_bin_SCRIPTS)
 	$(V)install -m 0755 $(dist_bin_SCRIPTS) $(dist_bin_SCRIPTS_INSTALL)
 
 $(config): $(go_OBJ) $(SOURCEDIR)/etc/conf/gen.go $(SOURCEDIR)/internal/pkg/runtime/engines/singularity/data/singularity.conf $(SOURCEDIR)/internal/pkg/runtime/engines/singularity/config.go
+<<<<<<< HEAD
 	@echo " GEN $@`if [ -n "$(old_config)" ]; then echo " from $(old_config)"; fi`"
 	$(V)go run $(SOURCEDIR)/etc/conf/gen.go $(SOURCEDIR)/internal/pkg/runtime/engines/singularity/data/singularity.conf $(old_config) $(config)
+=======
+	$(V)go run $(SOURCEDIR)/etc/conf/gen.go $(SOURCEDIR)/internal/pkg/runtime/engines/singularity/data/singularity.conf $(config_INSTALL) $(config)
+>>>>>>> origin/master
 
 $(config_INSTALL): $(config)
 	@echo " INSTALL" $@

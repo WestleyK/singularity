@@ -62,7 +62,14 @@ func (t *ImageReference) newImageSource(ctx context.Context, sys *types.SystemCo
 	// First we are fetching into the cache
 	err = copy.Image(context.Background(), policyCtx, t.ImageReference, t.source, &copy.Options{
 		ReportWriter: w,
+<<<<<<< HEAD:internal/pkg/client/oci/oci.go
 		SourceCtx:    sys,
+=======
+		SourceCtx: &types.SystemContext{
+			OCIInsecureSkipTLSVerify:    true,
+			DockerInsecureSkipTLSVerify: true,
+		},
+>>>>>>> origin/master:internal/pkg/client/oci/oci.go
 	})
 	if err != nil {
 		return nil, err

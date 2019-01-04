@@ -9,7 +9,11 @@ import (
 	"fmt"
 	"os"
 
+<<<<<<< HEAD
 	cli "github.com/sylabs/singularity/internal/app/singularity"
+=======
+	"github.com/sylabs/singularity/cmd/singularity/cli"
+>>>>>>> origin/master
 )
 
 func main() {

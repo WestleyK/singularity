@@ -12,8 +12,13 @@ import (
 	"runtime"
 	"strings"
 
+<<<<<<< HEAD:internal/pkg/build/sources/conveyorPacker_debootstrap.go
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+>>>>>>> origin/master:internal/pkg/build/sources/conveyorPacker_debootstrap.go
 )
 
 // DebootstrapConveyorPacker holds stuff that needs to be packed into the bundle

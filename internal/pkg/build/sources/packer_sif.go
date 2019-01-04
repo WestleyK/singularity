@@ -13,8 +13,13 @@ import (
 	"syscall"
 
 	"github.com/sylabs/sif/pkg/sif"
+<<<<<<< HEAD:internal/pkg/build/sources/packer_sif.go
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+>>>>>>> origin/master:internal/pkg/build/sources/packer_sif.go
 	"github.com/sylabs/singularity/pkg/util/loop"
 )
 

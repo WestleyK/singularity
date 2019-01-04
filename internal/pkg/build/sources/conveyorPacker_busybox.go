@@ -14,8 +14,13 @@ import (
 	"os/exec"
 	"path/filepath"
 
+<<<<<<< HEAD:internal/pkg/build/sources/conveyorPacker_busybox.go
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+>>>>>>> origin/master:internal/pkg/build/sources/conveyorPacker_busybox.go
 )
 
 // BusyBoxConveyor only needs to hold the conveyor to have the needed data to pack

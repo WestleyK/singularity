@@ -20,11 +20,19 @@ import (
 
 	"github.com/satori/go.uuid"
 	"github.com/sylabs/sif/pkg/sif"
+<<<<<<< HEAD:internal/pkg/build/assemblers/assembler_sif.go
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/build/types/parser"
+>>>>>>> origin/master:internal/pkg/build/assemblers/assembler_sif.go
 	"github.com/sylabs/singularity/internal/pkg/buildcfg"
 	"github.com/sylabs/singularity/internal/pkg/runtime/engines/config"
 	"github.com/sylabs/singularity/internal/pkg/runtime/engines/singularity"
 	"github.com/sylabs/singularity/internal/pkg/sylog"
+<<<<<<< HEAD:internal/pkg/build/assemblers/assembler_sif.go
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+>>>>>>> origin/master:internal/pkg/build/assemblers/assembler_sif.go
 )
 
 // SIFAssembler doesnt store anything

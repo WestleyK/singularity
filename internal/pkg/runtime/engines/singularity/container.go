@@ -31,7 +31,10 @@ import (
 	"github.com/sylabs/singularity/internal/pkg/util/fs/proc"
 	"github.com/sylabs/singularity/internal/pkg/util/user"
 	"github.com/sylabs/singularity/pkg/util/loop"
+<<<<<<< HEAD:internal/pkg/runtime/engines/singularity/container.go
 	"golang.org/x/crypto/ssh/terminal"
+=======
+>>>>>>> origin/master:internal/pkg/runtime/engines/singularity/container.go
 )
 
 type container struct {

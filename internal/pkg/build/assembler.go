@@ -8,7 +8,11 @@ package build
 import (
 	"fmt"
 
+<<<<<<< HEAD:internal/pkg/build/assembler.go
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+>>>>>>> origin/master:internal/pkg/build/assembler.go
 )
 
 // validAssemblers contains of list of know Assemblers

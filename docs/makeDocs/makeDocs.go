@@ -9,7 +9,11 @@ import (
 	"os"
 
 	"github.com/spf13/cobra/doc"
+<<<<<<< HEAD:docs/makeDocs/makeDocs.go
 	cli "github.com/sylabs/singularity/internal/app/singularity"
+=======
+	"github.com/sylabs/singularity/cmd/singularity/cli"
+>>>>>>> origin/master:src/docs/makeDocs/makeDocs.go
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"golang.org/x/sys/unix"
 )

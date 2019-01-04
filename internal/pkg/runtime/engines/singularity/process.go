@@ -25,7 +25,10 @@ import (
 	specs "github.com/opencontainers/runtime-spec/specs-go"
 	"github.com/sylabs/singularity/internal/pkg/instance"
 	"github.com/sylabs/singularity/internal/pkg/sylog"
+<<<<<<< HEAD:internal/pkg/runtime/engines/singularity/process.go
 	"golang.org/x/crypto/ssh/terminal"
+=======
+>>>>>>> origin/master:internal/pkg/runtime/engines/singularity/process.go
 )
 
 func (engine *EngineOperations) checkExec() error {

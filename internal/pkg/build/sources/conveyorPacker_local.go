@@ -9,9 +9,15 @@ import (
 	"fmt"
 	"path/filepath"
 
+<<<<<<< HEAD:internal/pkg/build/sources/conveyorPacker_local.go
 	"github.com/sylabs/singularity/internal/pkg/image"
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/image"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+>>>>>>> origin/master:internal/pkg/build/sources/conveyorPacker_local.go
 	"github.com/sylabs/singularity/pkg/util/loop"
 )
 

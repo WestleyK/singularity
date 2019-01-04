@@ -16,8 +16,13 @@ import (
 	"strings"
 	"sync"
 
+<<<<<<< HEAD:internal/pkg/build/apps/apps.go
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+>>>>>>> origin/master:src/plugins/apps/apps.go
 )
 
 const name = "singularity_apps"

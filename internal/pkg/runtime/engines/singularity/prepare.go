@@ -13,7 +13,10 @@ import (
 	"path/filepath"
 	"strings"
 
+<<<<<<< HEAD:internal/pkg/runtime/engines/singularity/prepare.go
 	"github.com/opencontainers/runtime-spec/specs-go"
+=======
+>>>>>>> origin/master:internal/pkg/runtime/engines/singularity/prepare.go
 	"github.com/sylabs/singularity/internal/pkg/buildcfg"
 	"github.com/sylabs/singularity/internal/pkg/image"
 	"github.com/sylabs/singularity/internal/pkg/instance"
@@ -23,10 +26,19 @@ import (
 	"github.com/sylabs/singularity/internal/pkg/security/seccomp"
 	"github.com/sylabs/singularity/internal/pkg/syecl"
 	"github.com/sylabs/singularity/internal/pkg/sylog"
+<<<<<<< HEAD:internal/pkg/runtime/engines/singularity/prepare.go
 	"github.com/sylabs/singularity/internal/pkg/util/fs"
 	"github.com/sylabs/singularity/internal/pkg/util/mainthread"
 	"github.com/sylabs/singularity/internal/pkg/util/user"
 	"github.com/sylabs/singularity/pkg/util/capabilities"
+=======
+	"github.com/sylabs/singularity/internal/pkg/util/capabilities"
+	"github.com/sylabs/singularity/internal/pkg/util/fs"
+	"github.com/sylabs/singularity/internal/pkg/util/mainthread"
+	"github.com/sylabs/singularity/internal/pkg/util/user"
+
+	specs "github.com/opencontainers/runtime-spec/specs-go"
+>>>>>>> origin/master:internal/pkg/runtime/engines/singularity/prepare.go
 )
 
 // prepareUserCaps is responsible for checking that user's requested

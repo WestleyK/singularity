@@ -8,8 +8,13 @@ package sources
 import (
 	"os/exec"
 
+<<<<<<< HEAD:internal/pkg/build/sources/packer_sandbox.go
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+>>>>>>> origin/master:internal/pkg/build/sources/packer_sandbox.go
 )
 
 // SandboxPacker holds the locations of where to pack from and to

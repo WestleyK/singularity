@@ -28,10 +28,17 @@ import (
 	"github.com/containers/image/types"
 	imgspecv1 "github.com/opencontainers/image-spec/specs-go/v1"
 	imagetools "github.com/opencontainers/image-tools/image"
+<<<<<<< HEAD:internal/pkg/build/sources/conveyorPacker_oci.go
 	ociclient "github.com/sylabs/singularity/internal/pkg/client/oci"
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/internal/pkg/util/shell"
 	sytypes "github.com/sylabs/singularity/pkg/build/types"
+=======
+	sytypes "github.com/sylabs/singularity/internal/pkg/build/types"
+	ociclient "github.com/sylabs/singularity/internal/pkg/client/oci"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+	"github.com/sylabs/singularity/internal/pkg/util/shell"
+>>>>>>> origin/master:internal/pkg/build/sources/conveyorPacker_oci.go
 )
 
 // OCIConveyorPacker holds stuff that needs to be packed into the bundle
@@ -55,10 +62,18 @@ func (cp *OCIConveyorPacker) Get(b *sytypes.Bundle) (err error) {
 		return err
 	}
 
+<<<<<<< HEAD:internal/pkg/build/sources/conveyorPacker_oci.go
 	cp.sysCtx = &types.SystemContext{
 		OCIInsecureSkipTLSVerify:    cp.b.Opts.NoHTTPS,
 		DockerInsecureSkipTLSVerify: cp.b.Opts.NoHTTPS,
 		DockerAuthConfig:            cp.b.Opts.DockerAuthConfig,
+=======
+	if cp.b.Opts.NoHTTPS {
+		cp.sysCtx = &types.SystemContext{
+			OCIInsecureSkipTLSVerify:    true,
+			DockerInsecureSkipTLSVerify: true,
+		}
+>>>>>>> origin/master:internal/pkg/build/sources/conveyorPacker_oci.go
 	}
 
 	// add registry and namespace to reference if specified

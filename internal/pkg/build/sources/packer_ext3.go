@@ -12,9 +12,15 @@ import (
 	"os/exec"
 	"syscall"
 
+<<<<<<< HEAD:internal/pkg/build/sources/packer_ext3.go
 	args "github.com/sylabs/singularity/internal/pkg/runtime/engines/singularity/rpc"
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	args "github.com/sylabs/singularity/internal/pkg/runtime/engines/singularity/rpc"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+>>>>>>> origin/master:internal/pkg/build/sources/packer_ext3.go
 	"github.com/sylabs/singularity/pkg/util/loop"
 )
 

@@ -6,7 +6,11 @@
 package main
 
 import (
+<<<<<<< HEAD:cmd/singularity/cli.go
 	cli "github.com/sylabs/singularity/internal/app/singularity"
+=======
+	"github.com/sylabs/singularity/cmd/singularity/cli"
+>>>>>>> origin/master:cmd/singularity/cli.go
 	"github.com/sylabs/singularity/internal/pkg/buildcfg"
 	useragent "github.com/sylabs/singularity/pkg/util/user-agent"
 )

@@ -10,8 +10,13 @@ import (
 	"os"
 	"os/exec"
 
+<<<<<<< HEAD:internal/pkg/build/assemblers/assembler_sandbox.go
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+>>>>>>> origin/master:internal/pkg/build/assemblers/assembler_sandbox.go
 )
 
 // SandboxAssembler doesnt store anything

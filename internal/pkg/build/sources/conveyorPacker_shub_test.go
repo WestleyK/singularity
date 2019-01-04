@@ -9,8 +9,13 @@ import (
 	"testing"
 
 	"github.com/sylabs/singularity/internal/pkg/build/sources"
+<<<<<<< HEAD:internal/pkg/build/sources/conveyorPacker_shub_test.go
 	"github.com/sylabs/singularity/internal/pkg/test"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/test"
+>>>>>>> origin/master:internal/pkg/build/sources/conveyorPacker_shub_test.go
 )
 
 const (

@@ -19,19 +19,32 @@ import (
 	"time"
 
 	specs "github.com/opencontainers/runtime-spec/specs-go"
+<<<<<<< HEAD:internal/pkg/build/build.go
 	"github.com/sylabs/singularity/internal/pkg/build/apps"
 	"github.com/sylabs/singularity/internal/pkg/build/assemblers"
 	"github.com/sylabs/singularity/internal/pkg/build/sources"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/assemblers"
+	"github.com/sylabs/singularity/internal/pkg/build/sources"
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/build/types/parser"
+>>>>>>> origin/master:internal/pkg/build/build.go
 	"github.com/sylabs/singularity/internal/pkg/buildcfg"
 	"github.com/sylabs/singularity/internal/pkg/image"
 	"github.com/sylabs/singularity/internal/pkg/runtime/engines/config"
 	"github.com/sylabs/singularity/internal/pkg/runtime/engines/config/oci"
 	"github.com/sylabs/singularity/internal/pkg/runtime/engines/imgbuild"
 	"github.com/sylabs/singularity/internal/pkg/sylog"
+<<<<<<< HEAD:internal/pkg/build/build.go
 	syexec "github.com/sylabs/singularity/internal/pkg/util/exec"
 	"github.com/sylabs/singularity/internal/pkg/util/uri"
 	"github.com/sylabs/singularity/pkg/build/types"
 	"github.com/sylabs/singularity/pkg/build/types/parser"
+=======
+	"github.com/sylabs/singularity/internal/pkg/syplugin"
+	syexec "github.com/sylabs/singularity/internal/pkg/util/exec"
+	"github.com/sylabs/singularity/internal/pkg/util/uri"
+>>>>>>> origin/master:internal/pkg/build/build.go
 )
 
 // Build is an abstracted way to look at the entire build process.

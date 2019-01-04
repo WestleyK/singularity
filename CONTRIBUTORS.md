@@ -64,3 +64,4 @@
     - Westley Kurtzer <westley@sylabs.io>
     - Yannick Cote <y@sylabs.io>, <yhcote@gmail.com>
     - Yaroslav Halchenko <debian@onerussian.com>
+    - Olivier Sallou <olivier.sallou@irisa.fr>

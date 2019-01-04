@@ -9,8 +9,13 @@ import (
 	"io/ioutil"
 	"os"
 
+<<<<<<< HEAD:internal/pkg/build/sources/conveyorPacker_shub.go
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	sytypes "github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+>>>>>>> origin/master:internal/pkg/build/sources/conveyorPacker_shub.go
 	"github.com/sylabs/singularity/pkg/client/shub"
 )
 

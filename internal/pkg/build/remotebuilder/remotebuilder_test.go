@@ -20,8 +20,13 @@ import (
 
 	"github.com/globalsign/mgo/bson"
 	"github.com/gorilla/websocket"
+<<<<<<< HEAD:internal/pkg/build/remotebuilder/remotebuilder_test.go
 	"github.com/sylabs/singularity/internal/pkg/test"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/test"
+>>>>>>> origin/master:internal/pkg/build/remotebuilder/remotebuilder_test.go
 	"github.com/sylabs/singularity/pkg/jsonresp"
 	"github.com/sylabs/singularity/pkg/util/user-agent"
 )

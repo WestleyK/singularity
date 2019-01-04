@@ -7,8 +7,13 @@ package libexec
 
 import (
 	"github.com/sylabs/singularity/internal/pkg/build"
+<<<<<<< HEAD:internal/pkg/libexec/pull.go
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+>>>>>>> origin/master:internal/pkg/libexec/pull.go
 	library "github.com/sylabs/singularity/pkg/client/library"
 	net "github.com/sylabs/singularity/pkg/client/net"
 	shub "github.com/sylabs/singularity/pkg/client/shub"

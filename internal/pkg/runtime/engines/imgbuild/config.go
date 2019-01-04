@@ -6,8 +6,13 @@
 package imgbuild
 
 import (
+<<<<<<< HEAD:internal/pkg/runtime/engines/imgbuild/config.go
 	"github.com/sylabs/singularity/internal/pkg/runtime/engines/config/oci"
 	"github.com/sylabs/singularity/pkg/build/types"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/runtime/engines/config/oci"
+>>>>>>> origin/master:internal/pkg/runtime/engines/imgbuild/config.go
 )
 
 // Name of the engine

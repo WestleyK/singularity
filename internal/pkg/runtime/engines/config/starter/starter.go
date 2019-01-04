@@ -18,9 +18,16 @@ import (
 	"syscall"
 	"unsafe"
 
+<<<<<<< HEAD:internal/pkg/runtime/engines/config/starter/starter.go
 	"github.com/opencontainers/runtime-spec/specs-go"
 	"github.com/sylabs/singularity/internal/pkg/sylog"
 	"github.com/sylabs/singularity/pkg/util/capabilities"
+=======
+	"github.com/sylabs/singularity/internal/pkg/sylog"
+
+	specs "github.com/opencontainers/runtime-spec/specs-go"
+	"github.com/sylabs/singularity/internal/pkg/util/capabilities"
+>>>>>>> origin/master:internal/pkg/runtime/engines/config/starter/starter.go
 )
 
 // CConfig is the common type for C.struct_cConfig

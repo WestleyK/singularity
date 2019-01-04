@@ -10,9 +10,15 @@ import (
 	"os/exec"
 	"testing"
 
+<<<<<<< HEAD:internal/pkg/build/sources/conveyorPacker_yum_test.go
 	"github.com/sylabs/singularity/internal/pkg/test"
 	"github.com/sylabs/singularity/pkg/build/types"
 	"github.com/sylabs/singularity/pkg/build/types/parser"
+=======
+	"github.com/sylabs/singularity/internal/pkg/build/types"
+	"github.com/sylabs/singularity/internal/pkg/build/types/parser"
+	"github.com/sylabs/singularity/internal/pkg/test"
+>>>>>>> origin/master:internal/pkg/build/sources/conveyorPacker_yum_test.go
 )
 
 const yumDef = "../../../../examples/centos/Singularity"

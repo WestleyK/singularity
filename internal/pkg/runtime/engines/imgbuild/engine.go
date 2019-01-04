@@ -12,7 +12,11 @@ import (
 
 	"github.com/sylabs/singularity/internal/pkg/runtime/engines/config"
 	"github.com/sylabs/singularity/internal/pkg/runtime/engines/config/starter"
+<<<<<<< HEAD:internal/pkg/runtime/engines/imgbuild/engine.go
 	"github.com/sylabs/singularity/pkg/util/capabilities"
+=======
+	"github.com/sylabs/singularity/internal/pkg/util/capabilities"
+>>>>>>> origin/master:internal/pkg/runtime/engines/imgbuild/engine.go
 )
 
 // EngineOperations implements the engines.EngineOperations interface for
