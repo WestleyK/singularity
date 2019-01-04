@@ -75,7 +75,10 @@ $ cd ${GOPATH}/src/github.com/sylabs/singularity && \
   sudo make install && \
 ```
 
+<<<<<<< HEAD
 And Thats it! Now you can check you Singularity version by running:
+=======
+Alternatively, to build an rpm on CentOS/RHEL use the following commands:
 
 ```bash
 $ singularity version
