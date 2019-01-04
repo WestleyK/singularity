@@ -1,17 +1,15 @@
 libruntime := $(BUILDDIR)/lib/libruntime.a
 
-starter_OBJ := $(shell $(SOURCEDIR)/makeit/gengodep $(SOURCEDIR)/src/runtime/starter/smaster.go)
-starter_OBJ += $(shell $(SOURCEDIR)/makeit/gengodep $(SOURCEDIR)/src/runtime/starter/scontainer.go)
-starter_OBJ += $(shell $(SOURCEDIR)/makeit/gengodep $(SOURCEDIR)/src/runtime/starter/rpc.go)
+starter_OBJ := $(shell $(SOURCEDIR)/makeit/gengodep $(SOURCEDIR)/cmd/starter/main.go)
 
-starter := $(BUILDDIR)/src/runtime/starter/c/starter
+starter := $(BUILDDIR)/cmd/starter/c/starter
 starter_INSTALL := $(DESTDIR)$(LIBEXECDIR)/singularity/bin/starter
 starter_suid_INSTALL := $(DESTDIR)$(LIBEXECDIR)/singularity/bin/starter-suid
-starter_SOURCE := $(SOURCEDIR)/src/runtime/starter/c/starter.c
+starter_SOURCE := $(SOURCEDIR)/cmd/starter/c/starter.c
 
 singularity := $(BUILDDIR)/singularity
 singularity_INSTALL := $(DESTDIR)$(EXECPREFIX)/bin/singularity
-singularity_OBJ := $(shell $(SOURCEDIR)/makeit/gengodep $(SOURCEDIR)/src/cmd/singularity/cli.go)
+singularity_OBJ := $(shell $(SOURCEDIR)/makeit/gengodep $(SOURCEDIR)/cmd/singularity/cli.go)
 singularity_REPO := github.com/sylabs/singularity
 
 dist_bin_SCRIPTS := $(SOURCEDIR)/scripts/run-singularity
@@ -19,14 +17,16 @@ dist_bin_SCRIPTS_INSTALL := $(DESTDIR)$(EXECPREFIX)/bin/run-singularity
 
 config := $(BUILDDIR)/singularity.conf
 config_INSTALL := $(DESTDIR)$(SYSCONFDIR)/singularity/singularity.conf
+# override this to empty to avoid merging old configuration settings
+old_config := $(config_INSTALL)
 
-syecl_config := $(SOURCEDIR)/src/pkg/syecl/syecl.toml.example
+syecl_config := $(SOURCEDIR)/internal/pkg/syecl/syecl.toml.example
 syecl_config_INSTALL := $(DESTDIR)$(SYSCONFDIR)/singularity/ecl.toml
 
 seccomp_profile := $(SOURCEDIR)/etc/seccomp-profiles/default.json
 seccomp_profile_INSTALL := $(DESTDIR)$(SYSCONFDIR)/singularity/seccomp-profiles/default.json
 
-cgroups_config := $(SOURCEDIR)/src/pkg/cgroups/example/cgroups.toml
+cgroups_config := $(SOURCEDIR)/internal/pkg/cgroups/example/cgroups.toml
 cgroups_config_INSTALL := $(DESTDIR)$(SYSCONFDIR)/singularity/cgroups/cgroups.toml
 
 capability_JSON := $(DESTDIR)$(SYSCONFDIR)/singularity/capability.json
@@ -34,7 +34,7 @@ capability_JSON := $(DESTDIR)$(SYSCONFDIR)/singularity/capability.json
 sessiondir := $(DESTDIR)$(LOCALSTATEDIR)/singularity/mnt/session
 
 go_BIN := $(singularity)
-go_OBJ := $(SOURCEDIR)/src/pkg/buildcfg/config.go
+go_OBJ := $(SOURCEDIR)/internal/pkg/buildcfg/config.go
 go_INSTALL := $(singularity_INSTALL)
 
 bash_completion :=  $(BUILDDIR)/etc/bash_completion.d/singularity
@@ -95,15 +95,25 @@ actions_LIST := $(SOURCEDIR)/etc/actions/exec $(SOURCEDIR)/etc/actions/run $(SOU
 	$(SOURCEDIR)/etc/actions/start $(SOURCEDIR)/etc/actions/test
 actions_INSTALL := $(DESTDIR)$(SYSCONFDIR)/singularity/actions
 
-INSTALLFILES := $(singularity_INSTALL) $(starter_INSTALL) $(starter_suid_INSTALL) $(sessiondir) \
-	$(config_INSTALL) $(dist_bin_SCRIPTS_INSTALL) $(capability_JSON) $(syecl_config_INSTALL) \
-	$(bash_completion_INSTALL) $(actions_INSTALL) $(cni_plugins_INSTALL) $(cni_config_INSTALL) \
-	$(seccomp_profile_INSTALL) $(NVIDIA_liblist_INSTALL) $(cgroups_config_INSTALL) 
+CLEANFILES += $(singularity) $(go_BIN) $(go_OBJ) $(bash_completion)
+INSTALLFILES := $(singularity_INSTALL) $(bash_completion_INSTALL)
 
-CLEANFILES += $(libruntime) $(starter) $(singularity) $(go_BIN) $(go_OBJ) $(bash_completion) \
-	$(cni_plugins_EXECUTABLES)
+ifeq ($(BUILD_RUNTIME),1)
+
+CLEANFILES += $(libruntime) $(starter) $(cni_plugins_EXECUTABLES)
+INSTALLFILES += $(starter_INSTALL) $(starter_suid_INSTALL) $(sessiondir) \
+	$(config_INSTALL) $(dist_bin_SCRIPTS_INSTALL) $(capability_JSON) $(syecl_config_INSTALL) \
+	$(actions_INSTALL) $(cni_plugins_INSTALL) $(cni_config_INSTALL) $(seccomp_profile_INSTALL) \
+	$(NVIDIA_liblist_INSTALL) $(cgroups_config_INSTALL)
 
 all: cscope collect $(libruntime) $(go_BIN) $(config) $(starter) $(bash_completion) cniplugins
+
+else # build_runtime
+
+all: cscope collect $(go_BIN) $(bash_completion)
+
+endif # build_runtime
+
 
 .PHONY: cniplugins
 cniplugins:
@@ -113,7 +123,7 @@ cniplugins:
 		cniplugin=$(cni_builddir)/$$name; \
 		if [ ! -f $$cniplugin ]; then \
 			echo " CNI PLUGIN" $$name; \
-			go build $(GO_BUILDMODE) $(GO_TAGS) $(GO_LDFLAGS) -o $$cniplugin $$p; \
+			go build $(GO_BUILDMODE) -tags "$(GO_TAGS)" $(GO_LDFLAGS) -o $$cniplugin $$p; \
 		fi \
 	done
 
@@ -133,21 +143,20 @@ $(libruntime): $(libutil_OBJ)
 	$(V)$(AR) rcs $@ $(libutil_OBJ)
 
 $(BUILDDIR)/.clean-starter: $(starter_SOURCE)
+	@echo " GO clean -cache"
 	$(V)(go clean -cache 2>/dev/null || true)
 	$(V)touch $@
 
 # starter
 $(starter): $(BUILDDIR)/.clean-starter $(go_OBJ) $(starter_OBJ) $(libruntime)
 	@echo " GO" $@
-	$(V)go build $(GO_BUILDMODE) $(GO_TAGS) $(GO_LDFLAGS) -o $@ \
-		$(SOURCEDIR)/src/runtime/starter/scontainer.go \
-		$(SOURCEDIR)/src/runtime/starter/smaster.go \
-		$(SOURCEDIR)/src/runtime/starter/rpc.go
+	$(V)go build $(GO_BUILDMODE) -tags "$(GO_TAGS)" $(GO_LDFLAGS) -o $@ \
+		$(SOURCEDIR)/cmd/starter/main.go
 
 # singularity
 $(singularity): $(go_OBJ) $(libruntime) $(singularity_OBJ)
 	@echo " GO" $@
-	$(V)go build $(GO_BUILDMODE) $(GO_TAGS) $(GO_LDFLAGS) -o $(BUILDDIR)/singularity $(SOURCEDIR)/src/cmd/singularity/cli.go
+	$(V)go build $(GO_BUILDMODE) -tags "$(GO_TAGS)" $(GO_LDFLAGS) -o $(BUILDDIR)/singularity $(SOURCEDIR)/cmd/singularity/cli.go
 $(singularity_INSTALL): $(singularity)
 	@echo " INSTALL" $@
 	$(V)install -d $(@D)
@@ -156,13 +165,13 @@ $(singularity_INSTALL): $(singularity)
 # config.go
 $(go_OBJ): $(libruntime) $(BUILDDIR)/config.h
 	$(V)rm -f $(go_OBJ)
-	$(V)export BUILDDIR=$(BUILDDIR_ABSPATH) && cd $(SOURCEDIR)/src/pkg/buildcfg && go generate
+	$(V)export BUILDDIR=$(BUILDDIR_ABSPATH) && cd $(SOURCEDIR)/internal/pkg/buildcfg && go generate
 
 # bash_completion file
 $(bash_completion): $(go_OBJ)
 	$(V)rm -f $@
 	$(V)mkdir -p $(@D)
-	$(V)go run $(GO_TAGS) $(SOURCEDIR)/etc/bash_completion.d/bash_completion.go $@
+	$(V)go run -tags "$(GO_TAGS)" $(SOURCEDIR)/etc/bash_completion.d/bash_completion.go $@
 
 # install singularity CLI bash_completion file
 $(bash_completion_INSTALL): $(bash_completion)
@@ -192,8 +201,9 @@ $(dist_bin_SCRIPTS_INSTALL): $(dist_bin_SCRIPTS)
 	$(V)install -d $(@D)
 	$(V)install -m 0755 $(dist_bin_SCRIPTS) $(dist_bin_SCRIPTS_INSTALL)
 
-$(config): $(go_OBJ) $(SOURCEDIR)/etc/conf/gen.go $(SOURCEDIR)/src/runtime/engines/singularity/data/singularity.conf $(SOURCEDIR)/src/runtime/engines/singularity/config.go
-	$(V)go run $(SOURCEDIR)/etc/conf/gen.go $(SOURCEDIR)/src/runtime/engines/singularity/data/singularity.conf $(config_INSTALL) $(config)
+$(config): $(go_OBJ) $(SOURCEDIR)/etc/conf/gen.go $(SOURCEDIR)/internal/pkg/runtime/engines/singularity/data/singularity.conf $(SOURCEDIR)/internal/pkg/runtime/engines/singularity/config.go
+	@echo " GEN $@`if [ -n "$(old_config)" ]; then echo " from $(old_config)"; fi`"
+	$(V)go run $(SOURCEDIR)/etc/conf/gen.go $(SOURCEDIR)/internal/pkg/runtime/engines/singularity/data/singularity.conf $(old_config) $(config)
 
 $(config_INSTALL): $(config)
 	@echo " INSTALL" $@
@@ -230,7 +240,7 @@ $(actions_INSTALL): $(actions_LIST)
 
 .PHONY: man
 man:
-	$(V)go run $(GO_TAGS) $(SOURCEDIR)/src/docs/makeDocs/makeDocs.go $(DESTDIR)$(MANDIR)/man1
+	$(V)go run -tags "$(GO_TAGS)" $(SOURCEDIR)/docs/makeDocs/makeDocs.go $(DESTDIR)$(MANDIR)/man1
 
 .PHONY: collect
 collect:
@@ -253,7 +263,7 @@ check: $(go_OBJ)
 		     false ) >&2 )
 	@echo "       PASS"
 	@echo " CHECK go vet"
-	$(V)cd $(SOURCEDIR) && go vet $(GO_TAGS) -all ./...
+	$(V)cd $(SOURCEDIR) && go vet -tags "$(GO_TAGS)" -all ./...
 	@echo "       PASS"
 	@echo " CHECK go lint"
 	$(V)cd $(SOURCEDIR) && golint -set_exit_status `go list ./...`
@@ -269,7 +279,7 @@ test:
 	@# avoid travis 10 minutes of silence timeout
 	$(V)M=0; eval 'while [ $$M -le 20 ]; do sleep 60; M=`expr $$M + 1`; echo "Still testing ($$M) ..."; done &' ; \
 	trap "kill $$! || true" 0; \
-	cd $(SOURCEDIR) && sudo -E `which go` test -count=1 -timeout=20m $(GO_TAGS) -cover -race ./...
+	cd $(SOURCEDIR) && sudo -E `which go` test -count=1 -timeout=20m -tags "$(GO_TAGS)" -cover -race ./...
 	@echo "       PASS"
 
 .PHONY: testall
