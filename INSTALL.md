@@ -53,6 +53,7 @@ $ echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
 ```
 
 ## Clone the repo
+
 golang is a bit finicky about where things are placed. Here is the correct way
 to build Singularity from source:
 
@@ -64,6 +65,7 @@ $ mkdir -p ${GOPATH}/src/github.com/sylabs && \
 ```
 
 ## Compile the Singularity binary
+
 Now you are ready to build Singularity. Dependencies will be automatically
 downloaded. You can build Singularity using the following commands:
 
@@ -75,10 +77,7 @@ $ cd ${GOPATH}/src/github.com/sylabs/singularity && \
   sudo make install && \
 ```
 
-<<<<<<< HEAD
 And Thats it! Now you can check you Singularity version by running:
-=======
-Alternatively, to build an rpm on CentOS/RHEL use the following commands:
 
 ```bash
 $ singularity version
