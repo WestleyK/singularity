@@ -1,17 +1,31 @@
-// Copyright (c) 2018-2019, Sylabs Inc. All rights reserved.
+// Copyright (c) 2019, Sylabs Inc. All rights reserved.
 // This software is licensed under a 3-clause BSD license. Please consult the
 // LICENSE.md file distributed with the sources of this project regarding your
 // rights to use or distribute this software.
 
-package main
+package pull
 
 import (
 	"os"
 	"os/exec"
+	//	"path/filepath"
 	"testing"
 
+	"github.com/kelseyhightower/envconfig"
+	"github.com/sylabs/singularity/e2e/imgbuild"
 	"github.com/sylabs/singularity/internal/pkg/test"
 )
+
+type testingEnv struct {
+	// base env for running tests
+	CmdPath     string `split_words:"true"`
+	TestDir     string `split_words:"true"`
+	RunDisabled bool   `default:"false"`
+}
+
+var testenv testingEnv
+
+//func TestEnv(t *Testing.T) {
 
 func imagePull(library string, imagePath string, sourceSpec string, force, unauthenticated bool) ([]byte, error) {
 	var argv []string
@@ -30,10 +44,10 @@ func imagePull(library string, imagePath string, sourceSpec string, force, unaut
 	}
 	argv = append(argv, sourceSpec)
 
-	return exec.Command(cmdPath, argv...).CombinedOutput()
+	return exec.Command(testenv.CmdPath, argv...).CombinedOutput()
 }
 
-func TestPull(t *testing.T) {
+func testPull(t *testing.T) {
 	test.DropPrivilege(t)
 
 	imagePath := "./test_pull.sif"
@@ -70,7 +84,8 @@ func TestPull(t *testing.T) {
 					t.Log(string(b))
 					t.Fatalf("unexpected failure: %v", err)
 				}
-				imageVerify(t, tt.imagePath, false)
+				//imgbuild.ImageVerify(t, tt.imagePath, false)
+				imgbuild.ImageVerify(t, testenv.CmdPath, imagePath, false, testenv.RunDisabled)
 			} else {
 				if err == nil {
 					t.Log(string(b))
@@ -79,4 +94,18 @@ func TestPull(t *testing.T) {
 			}
 		}))
 	}
+
+}
+
+// RunE2ETests is the main func to trigger the test suite
+func RunE2ETests(t *testing.T) {
+	err := envconfig.Process("E2E", &testenv)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	t.Log(testenv)
+
+	t.Run("pull", testPull)
+
 }
