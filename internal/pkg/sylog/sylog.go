@@ -15,6 +15,8 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+
+	"github.com/fatih/color"
 )
 
 type messageLevel int
@@ -55,10 +57,15 @@ var messageLabels = map[messageLevel]string{
 }
 
 var messageColors = map[messageLevel]string{
-	fatal: "\x1b[31m",
-	error: "\x1b[31m",
-	warn:  "\x1b[33m",
-	info:  "\x1b[34m",
+	fatal:    color.RedString("FATAL:"),
+	error:    color.RedString("ERROR:"),
+	warn:     color.YellowString("WARNING:"),
+	info:     color.BlueString("INFO:"),
+	verbose:  color.CyanString("VERBOSE:"),
+	verbose2: color.CyanString("VERBOSE:"),
+	verbose3: color.CyanString("VERBOSE:"),
+	debug:    color.GreenString("DEBUG:"),
+	log:      color.GreenString("LOG:"),
 }
 
 var colorReset = "\x1b[0m"
@@ -87,7 +94,9 @@ func prefix(level messageLevel) string {
 
 	// This section builds and returns the prefix for levels < debug
 	if loggerLevel < debug {
-		return fmt.Sprintf("%s%-8s%s ", messageColor, level.String()+":", colorReset)
+		//return fmt.Sprintf("%s%-8s%s ", messageColor, level.String()+":", colorReset)
+		//fmt.Println("HELLLLLLLLO: ", messageColor)
+		return fmt.Sprintf("%-17s ", messageColor)
 	}
 
 	pc, _, _, ok := runtime.Caller(3)
@@ -106,7 +115,8 @@ func prefix(level messageLevel) string {
 	pid := os.Getpid()
 	uidStr := fmt.Sprintf("[U=%d,P=%d]", uid, pid)
 
-	return fmt.Sprintf("%s%-8s%s%-19s%-30s", messageColor, level, colorReset, uidStr, funcName)
+	//return fmt.Sprintf("%s%-8s%s%-19s%-30s", messageColor, level, colorReset, uidStr, funcName)
+	return fmt.Sprintf("%-22s %-19s %-30s", messageColor, uidStr, funcName)
 }
 
 func writef(level messageLevel, format string, a ...interface{}) {

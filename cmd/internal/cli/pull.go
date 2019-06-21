@@ -168,6 +168,14 @@ var PullCmd = &cobra.Command{
 }
 
 func pullRun(cmd *cobra.Command, args []string) {
+
+	sylog.Infof("HELLO WORLD!!!")
+	sylog.Warningf("HELLO WORLD!!!")
+	sylog.Debugf("HELLO WORLD!!!")
+	sylog.Verbosef("HELLO WORLD!!!")
+	sylog.Errorf("HELLO WORLD!!!")
+	sylog.Fatalf("HELLO WORLD!!!")
+
 	exitStat := 0
 	i := len(args) - 1 // uri is stored in args[len(args)-1]
 	transport, ref := uri.Split(args[i])
