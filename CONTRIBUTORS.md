@@ -7,7 +7,6 @@
     - Adam Hughes <adam@sylabs.io>, <stickmanica@gmail.com>
     - Dave Godlove <d@sylabs.io>, <davidgodlove@gmail.com>
     - Michael Bauer <m@sylabs.io>, <bauerm@umich.edu>
-    - Mike Gray <mike@sylabs.io>
 
 # Contributors:
 
