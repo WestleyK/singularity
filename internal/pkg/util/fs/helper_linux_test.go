@@ -334,3 +334,67 @@ func TestMakeTempFile(t *testing.T) {
 		}
 	}
 }
+
+func TestIsWritable(t *testing.T) {
+	// We make a tmeporary directory where all the different cases will be tested
+	tempDir, err := ioutil.TempDir("", "")
+	if err != nil {
+		t.Fatalf("failed to create temporary directory: %s", err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	// All the directory that we are about to create will be deleted when the temporary
+	// directory will be removed.
+	validWritablePath := filepath.Join(tempDir, "writableDir")
+	validNotWritablePath := filepath.Join(tempDir, "notWritableDir")
+	err = os.MkdirAll(validWritablePath, 0755)
+	if err != nil {
+		t.Fatalf("failed to create directory %s: %s", validWritablePath, err)
+	}
+	err = os.MkdirAll(validNotWritablePath, 0444)
+	if err != nil {
+		t.Fatalf("failed to create directory %s: %s", validNotWritablePath, err)
+	}
+
+	tests := []struct {
+		name           string
+		path           string
+		shallPass      bool
+		expectedResult bool
+	}{
+		{
+			name:           "empty path",
+			path:           "",
+			shallPass:      false,
+			expectedResult: false,
+		},
+		{
+			name:           "writable path",
+			path:           validWritablePath,
+			shallPass:      true,
+			expectedResult: true,
+		},
+		{
+			name:           "not writable path",
+			path:           validNotWritablePath,
+			shallPass:      true,
+			expectedResult: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			writable, err := IsWritable(tt.path)
+			if tt.shallPass && err != nil {
+				t.Fatalf("test %s expected to succeed but failed: %s", tt.name, err)
+			}
+			if !tt.shallPass && err == nil {
+				t.Fatalf("test %s expected to fail but succeeded", tt.name)
+			}
+			if tt.expectedResult != writable {
+				t.Fatalf("test %s returned %v instead of %v", tt.name, writable, tt.expectedResult)
+			}
+		})
+	}
+
+}
