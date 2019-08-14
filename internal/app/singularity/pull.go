@@ -56,7 +56,7 @@ func LibraryPull(imgCache *cache.Handle, name, fullURI, libraryURI, keyServerURL
 		return fmt.Errorf("could not get image info: %v", err)
 	}
 
-	if noCache {
+	if noCache || imgCache.IsDisabled() {
 		// don't use cached image
 		sylog.Infof("Downloading library image: %s", name)
 		err := library.DownloadImage(context.TODO(), libraryClient, name, imageRef, downloadImageCallback)
@@ -144,7 +144,7 @@ func PullShub(imgCache *cache.Handle, filePath string, shubRef string, noHTTPS, 
 	imageName := uri.GetName(shubRef)
 	imagePath := imgCache.ShubImage(manifest.Commit, imageName)
 
-	if noCache {
+	if noCache || imgCache.IsDisabled() {
 		// Dont use cached image
 		if err := shub.DownloadImage(manifest, filePath, shubRef, true, noHTTPS); err != nil {
 			return err
@@ -296,7 +296,7 @@ func OciPull(imgCache *cache.Handle, name, imageURI, tmpDir string, ociAuth *oci
 		return fmt.Errorf("failed to get checksum for %s: %s", imageURI, err)
 	}
 
-	if noCache {
+	if noCache || imgCache.IsDisabled() {
 		if err := convertDockerToSIF(imgCache, imageURI, name, tmpDir, noHTTPS, true, ociAuth); err != nil {
 			return fmt.Errorf("while building SIF from layers: %v", err)
 		}
