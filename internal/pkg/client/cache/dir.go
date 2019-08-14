@@ -107,6 +107,11 @@ func NewHandle(baseDir string) (*Handle, error) {
 		return newCache, nil
 	}
 
+	newCache.disabled = false
+
+	if baseDir == "" {
+		baseDir = getCacheBasedir()
+	}
 	// We check if we can write to the basedir, if not we disable the caching mechanism
 	writable, _ := fs.IsWritable(baseDir)
 	if !writable {
@@ -114,11 +119,6 @@ func NewHandle(baseDir string) (*Handle, error) {
 		return newCache, nil
 	}
 
-	newCache.disabled = false
-
-	if baseDir == "" {
-		baseDir = getCacheBasedir()
-	}
 	rootDir := getCacheRoot(baseDir)
 
 	// We make sure that the rootDir is actually a valid value
