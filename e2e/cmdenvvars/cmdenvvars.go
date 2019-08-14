@@ -20,13 +20,6 @@ type ctx struct {
 }
 
 func setupTempDirs(t *testing.T, readOnly bool) (string, string, func(t *testing.T)) {
-	// The intent of the test is simple:
-	// - create 2 temporary directories, one where the image will be pulled and one where the
-	//   image cache should be created,
-	// - pull an image,
-	// - check whether we have the correct entry in the cache, within the directory we created.
-	// If the file is in our cache, it means the e2e framework correctly set the SINGULARITY_CACHE_DIR
-	// while executing the pull command.
 	cacheDir, err := ioutil.TempDir("", "e2e-imgcache-")
 	if err != nil {
 		t.Fatalf("failed to create temporary directory: %s", err)
@@ -84,6 +77,14 @@ func (c *ctx) cacheIsNotExist(t *testing.T, imgPath string) {
 }
 
 func (c *ctx) testSingularityCacheDir(t *testing.T) {
+	// The intent of the test is simple:
+	// - create 2 temporary directories, one where the image will be pulled and one where the
+	//   image cache should be created,
+	// - pull an image,
+	// - check whether we have the correct entry in the cache, within the directory we created.
+	// If the file is in our cache, it means the e2e framework correctly set the SINGULARITY_CACHE_DIR
+	// while executing the pull command.
+
 	testDir, cacheDir, cleanup := setupTempDirs(t, false)
 	c.env.TestDir = testDir
 	defer cleanup(t)
