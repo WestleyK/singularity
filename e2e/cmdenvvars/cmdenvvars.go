@@ -122,9 +122,9 @@ func (c *ctx) testSingularityDisableCache(t *testing.T) {
 // context, the home directory ends up being read-only and no caching
 // is required.
 func (c *ctx) testSingularityReadOnlyCacheDir(t *testing.T) {
-	testDir, cacheDir, _ := setupTempDirs(t, true)
+	testDir, cacheDir, cleanup := setupTempDirs(t, true)
 	c.env.TestDir = testDir
-	//defer cleanup(t)
+	defer cleanup(t)
 
 	// Change the mode of the image cache to read-only
 	err := os.Chmod(cacheDir, 0444)
