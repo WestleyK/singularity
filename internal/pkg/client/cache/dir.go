@@ -109,9 +109,11 @@ func NewHandle(baseDir string) (*Handle, error) {
 
 	newCache.disabled = false
 
+	/* Initialize the base directory of the cache */
 	if baseDir == "" {
 		baseDir = getCacheBasedir()
 	}
+	newCache.baseDir = baseDir
 	// We check if we can write to the basedir, if not we disable the caching mechanism
 	writable, _ := fs.IsWritable(baseDir)
 	if !writable {
@@ -119,8 +121,8 @@ func NewHandle(baseDir string) (*Handle, error) {
 		return newCache, nil
 	}
 
+	/* Initialize the root directory of the cache */
 	rootDir := getCacheRoot(baseDir)
-
 	// We make sure that the rootDir is actually a valid value
 	// FIXME: not really necessary anymore
 	user, err := user.Current()
@@ -130,13 +132,11 @@ func NewHandle(baseDir string) (*Handle, error) {
 	if rootDir == "" || rootDir == user.HomeDir {
 		return nil, fmt.Errorf("invalid root directory")
 	}
-
 	if err = initCacheDir(rootDir); err != nil {
 		return nil, fmt.Errorf("failed initializing caching directory: %s", err)
 	}
-
-	newCache.baseDir = baseDir
 	newCache.rootDir = rootDir
+
 	newCache.Library, err = getLibraryCachePath(newCache)
 	if err != nil {
 		return nil, fmt.Errorf("failed getting the path to the Library cache: %s", err)

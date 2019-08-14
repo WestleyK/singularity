@@ -47,6 +47,17 @@ func TestNewHandle(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			c, err := NewHandle(tt.dir)
+
+			// Before running the test we make sure that the test environment
+			// did not implicitly disable the cache.
+			if c.IsDisabled() {
+				writable, _ := fs.IsWritable(c.GetBasedir())
+				if !writable {
+					t.Skipf("cache's base directory is not writable; cache is disabled for %s", tt.name)
+				}
+				t.Skipf("cache disabled for %s", tt.name)
+			}
+
 			if err != nil {
 				t.Fatalf("failed to create new image cache handle: %s", err)
 			}
