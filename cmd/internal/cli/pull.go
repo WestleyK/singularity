@@ -213,6 +213,8 @@ func pullRun(cmd *cobra.Command, args []string) {
 		}
 	}
 
+	imgCache.Disabled = disableCache
+
 	// monitor for OS signals and remove invalid file
 	c := make(chan os.Signal)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)

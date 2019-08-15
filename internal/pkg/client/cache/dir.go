@@ -77,8 +77,8 @@ type Handle struct {
 	// Oras provides the location of the ORAS cache
 	Oras string
 
-	// disabled specifies if the test is disabled
-	disabled bool
+	// Disabled specifies if the test is disabled
+	Disabled bool
 }
 
 // NewHandle initializes a new cache within a given directory. It does not set
@@ -99,15 +99,15 @@ func NewHandle(baseDir string) (*Handle, error) {
 		envCacheDisabled = "0"
 	}
 	var err error
-	newCache.disabled, err = strconv.ParseBool(envCacheDisabled)
+	newCache.Disabled, err = strconv.ParseBool(envCacheDisabled)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse environment variable %s: %s", DisableEnv, err)
 	}
-	if newCache.disabled {
+	if newCache.Disabled {
 		return newCache, nil
 	}
 
-	newCache.disabled = false
+	newCache.Disabled = false
 
 	/* Initialize the base directory of the cache */
 	if baseDir == "" {
@@ -117,7 +117,7 @@ func NewHandle(baseDir string) (*Handle, error) {
 	// We check if we can write to the basedir, if not we disable the caching mechanism
 	writable, _ := fs.IsWritable(baseDir)
 	if !writable {
-		newCache.disabled = true
+		newCache.Disabled = true
 		return newCache, nil
 	}
 
@@ -206,7 +206,7 @@ func (c *Handle) GetBasedir() string {
 
 // IsDisabled returns true if the cache is disabled
 func (c *Handle) IsDisabled() bool {
-	return c.disabled
+	return c.Disabled
 }
 
 // updateCacheSubdir update/create a sub-cache (directory) within the cache,
@@ -255,7 +255,7 @@ func initCacheDir(dir string) error {
 // cleanAllCaches is an utility function that wipes all files in the
 // cache directory, will return a error if one occurs
 func (c *Handle) cleanAllCaches() {
-	if c.disabled {
+	if c.Disabled {
 		return
 	}
 

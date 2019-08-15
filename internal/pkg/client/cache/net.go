@@ -25,7 +25,7 @@ func Net() string {
 // Net returns the directory inside the cache.Dir() where shub images are
 // cached
 func getNetCachePath(c *Handle) (string, error) {
-	if c.disabled {
+	if c.Disabled {
 		return "", nil
 	}
 
@@ -38,7 +38,7 @@ func getNetCachePath(c *Handle) (string, error) {
 
 // NetImage creates a directory inside cache.Dir() with the name of the SHA sum of the image
 func (c *Handle) NetImage(sum, name string) string {
-	if c.disabled {
+	if c.Disabled {
 		return ""
 	}
 
@@ -52,7 +52,7 @@ func (c *Handle) NetImage(sum, name string) string {
 
 // NetImageExists returns whether the image with the SHA sum exists in the net cache
 func (c *Handle) NetImageExists(sum, name string) (bool, error) {
-	if c.disabled {
+	if c.Disabled {
 		return false, nil
 	}
 
