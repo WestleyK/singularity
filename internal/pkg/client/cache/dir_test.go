@@ -48,7 +48,7 @@ func TestNewHandle(t *testing.T) {
 
 			// Before running the test we make sure that the test environment
 			// did not implicitly disable the cache.
-			c.chechIfCacheDisabled(t)
+			c.checkIfCacheDisabled(t)
 
 			if err != nil {
 				t.Fatalf("failed to create new image cache handle: %s", err)
@@ -78,7 +78,7 @@ func TestCleanAllCaches(t *testing.T) {
 
 	// Before running the test we make sure that the test environment
 	// did not implicitly disable the cache.
-	c.chechIfCacheDisabled(t)
+	c.checkIfCacheDisabled(t)
 
 	// list of subdirs to iterate over
 	cacheDirs := map[string]string{
@@ -153,7 +153,7 @@ func TestRoot(t *testing.T) {
 
 			// Before running the test we make sure that the test environment
 			// did not implicitly disable the cache.
-			imgCache.chechIfCacheDisabled(t)
+			imgCache.checkIfCacheDisabled(t)
 
 			root := imgCache.rootDir
 			if root != tt.expectedResult {

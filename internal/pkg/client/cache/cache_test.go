@@ -24,7 +24,7 @@ const (
 // SINGULARITY_DISABLE_CACHE environment variable is set. If it is set, it will
 // skip the current tests since exercising the cache when caching is disabled is
 // not supported.
-func (c *Handle) chechIfCacheDisabled(t *testing.T) {
+func (c *Handle) checkIfCacheDisabled(t *testing.T) {
 	envValue := os.Getenv(DisableEnv)
 	if envValue == "" {
 		envValue = "0"

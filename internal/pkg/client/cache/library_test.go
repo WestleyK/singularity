@@ -49,7 +49,7 @@ func TestLibrary(t *testing.T) {
 
 			// Before running the test we make sure that the test environment
 			// did not implicitly disable the cache.
-			c.chechIfCacheDisabled(t)
+			c.checkIfCacheDisabled(t)
 
 			if tt.needCleanup {
 				defer c.cleanAllCaches()
@@ -79,7 +79,7 @@ func TestLibraryImage(t *testing.T) {
 
 	// Before running the test we make sure that the test environment
 	// did not implicitly disable the cache.
-	c.chechIfCacheDisabled(t)
+	c.checkIfCacheDisabled(t)
 
 	// LibraryImage just return a string and there is no definition of what
 	// could be a bad string.
@@ -154,7 +154,7 @@ func TestLibraryImageExists(t *testing.T) {
 
 	// Before running the test we make sure that the test environment
 	// did not implicitly disable the cache.
-	c.chechIfCacheDisabled(t)
+	c.checkIfCacheDisabled(t)
 
 	// Invalid cases
 	_, err = c.LibraryImageExists("", "")

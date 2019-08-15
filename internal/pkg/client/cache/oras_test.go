@@ -70,7 +70,7 @@ func TestOrasImage(t *testing.T) {
 
 	// Before running the test we make sure that the test environment
 	// did not implicitly disable the cache.
-	c.chechIfCacheDisabled(t)
+	c.checkIfCacheDisabled(t)
 
 	tests := []struct {
 		name           string
