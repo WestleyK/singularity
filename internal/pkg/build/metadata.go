@@ -261,9 +261,43 @@ func getExistingLabels(labels map[string]string, b *types.Bundle) error {
 	return nil
 }
 
+func dirSize(path string) (int64, error) {
+	var size int64
+	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			size += info.Size()
+		}
+		return err
+	})
+	return size, err
+}
+
+func findSize(size int64) string {
+	var factor float64
+	var unit string
+	switch {
+	case size < 1e6:
+		factor = 1e3
+		unit = "kB"
+	case size < 1e9:
+		factor = 1e6
+		unit = "MB"
+	case size < 1e12:
+		factor = 1e9
+		unit = "GB"
+	default:
+		factor = 1e12
+		unit = "TB"
+	}
+	return fmt.Sprintf("%.2f %s", float64(size)/factor, unit)
+}
+
 func addBuildLabels(labels map[string]string, b *types.Bundle) error {
 	// schema version
-	labels["org.label-schema.schema-version"] = "1.0"
+	labels["org.label-schema.schema-version"] = "1.0.1"
 
 	// build date and time, lots of time formatting
 	currentTime := time.Now()
@@ -273,7 +307,16 @@ func addBuildLabels(labels map[string]string, b *types.Bundle) error {
 	time := strconv.Itoa(hour) + `:` + strconv.Itoa(min) + `:` + strconv.Itoa(sec)
 	zone, _ := currentTime.Zone()
 	timeString := currentTime.Weekday().String() + `_` + date + `_` + time + `_` + zone
+	//imageSize := "0123456789"
 	labels["org.label-schema.build-date"] = timeString
+
+	fmt.Printf("INFOOOO: %s\n", b.Rootfs())
+	imageSize, err := dirSize(b.Rootfs())
+	if err == nil {
+		labels["org.label-schema.raw-build-size"] = findSize(imageSize)
+	} else {
+		fmt.Printf("error getting dir size: %s", err)
+	}
 
 	// singularity version
 	labels["org.label-schema.usage.singularity.version"] = buildcfg.PACKAGE_VERSION
